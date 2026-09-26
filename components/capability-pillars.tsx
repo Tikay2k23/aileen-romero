@@ -307,7 +307,7 @@ export default function CapabilityPillars() {
       })}
 
       {/* Closing panel: swings in over the last pillar like the others */}
-      <FlowSection aria-label="Let's work together" style={TONES.light.style}>
+      <FlowSection id="contact" aria-label="Let's work together" style={TONES.light.style}>
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <LetsWorkTogether className="min-h-0 flex-1" />
       </FlowSection>
