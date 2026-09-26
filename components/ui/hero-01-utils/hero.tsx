@@ -27,7 +27,8 @@ function HeroSection({ avatarList }: HeroSectionProps) {
         <div className="relative w-full pt-0 md:pt-[min(5rem,8svh)] pb-6 md:pb-10">
           <PageGlow className="absolute top-24" />
           <div className="container mx-auto relative z-10">
-            <div className="flex flex-col max-w-5xl mx-auto gap-8">
+            {/* max-w-7xl (was 5xl) so "Building smarter systems" fits on one line at the lg:text-8xl size */}
+            <div className="flex flex-col max-w-7xl mx-auto gap-8">
               <div className="relative flex flex-col text-center items-center sm:gap-6 gap-4">
                 <motion.h1
                   initial={{ opacity: 0, y: 32 }}
@@ -35,11 +36,11 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                   transition={{ duration: 1, ease: "easeInOut" }}
                   className="lg:text-8xl md:text-7xl text-5xl font-medium leading-14 md:leading-20 lg:leading-24"
                 >
-                  Building bold brands with{" "}
+                  Building smarter systems that drive{" "}
                   <span
                     className={`${instrumentSerif.className} tracking-tight`}
                   >
-                    thoughtful design
+                    real&nbsp;growth
                   </span>
                 </motion.h1>
                 <motion.p
@@ -48,9 +49,8 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                   transition={{ duration: 1, delay: 0.1, ease: "easeInOut" }}
                   className="text-base font-normal max-w-2xl text-muted-foreground"
                 >
-                  Hi, I&apos;m Aileen Romero. Welcome to my portfolio, a look at
-                  the projects, ideas and collaborations I&apos;ve been working
-                  on.
+                  I build automation, CRM, AI, and digital systems that help
+                  businesses streamline operations, capture leads, and grow.
                 </motion.p>
               </div>
               <motion.div

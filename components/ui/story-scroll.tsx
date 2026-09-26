@@ -12,6 +12,8 @@ function cx(...parts: Array<string | undefined | false | null>): string {
 }
 
 export interface FlowSectionProps {
+  // Anchor target (goes on the section, not the rotating inner, so links land exactly)
+  id?: string;
   className?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
@@ -19,6 +21,7 @@ export interface FlowSectionProps {
 }
 
 export const FlowSection: React.FC<FlowSectionProps> = ({
+  id,
   className,
   style = {},
   children,
@@ -28,6 +31,7 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
   // sections are added/removed React only touches wrappers, never a node GSAP has re-parented
   <div>
     <section
+      id={id}
       data-flow-section
       aria-label={ariaLabel}
       className={cx('relative min-h-screen w-full overflow-hidden', className)}
