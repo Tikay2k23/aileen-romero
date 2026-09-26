@@ -1,6 +1,7 @@
 import HeroOne from "@/components/ui/hero-01";
 import { Skiper31 } from "@/components/ui/text-scroll-animation";
 import CapabilityPillars from "@/components/capability-pillars";
+import FaqSection from "@/components/faq-section";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroOne />
       <Skiper31 />
       <CapabilityPillars />
+      <FaqSection />
     </>
   );
 }
