@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
+import PageGlow from "@/components/page-glow";
 
 // --- Types ---
 export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip";
@@ -290,7 +291,9 @@ export default function IntroAnimation({
     const contentY = useTransform(smoothMorph, [0.8, 1], [20, 0]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-full bg-[#FAFAFA] overflow-hidden">
+        // Opaque page base + the shared glow at the same spot, so fading out into the page is seamless
+        <div ref={containerRef} className="relative isolate w-full h-full bg-background overflow-hidden">
+            <PageGlow className="absolute top-44" />
             <div className="flex h-full w-full flex-col items-center justify-center perspective-[1000px]">
 
                 {/* Intro Text (Fades out) */}

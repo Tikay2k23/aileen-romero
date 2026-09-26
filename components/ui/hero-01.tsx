@@ -5,7 +5,6 @@ import BrandSlider, {
   BrandList,
 } from "@/components/ui/hero-01-utils/brand-slider";
 import type { AvatarList } from "@/components/ui/hero-01-utils/hero";
-import { ScrollHint } from "@/components/ui/text-scroll-animation";
 
 export default function AgencyHeroSection() {
   const avatarList: AvatarList[] = [
@@ -93,11 +92,7 @@ export default function AgencyHeroSection() {
     <div className="relative">
       <Header navigationData={navigationData} />
       <main>
-        {/* First screen: hero with the scroll hint pinned to its bottom (5rem = header height) */}
-        <div className="flex min-h-[calc(100svh-5rem)] flex-col">
-          <HeroSection avatarList={avatarList} />
-          <ScrollHint className="mt-auto pb-20" />
-        </div>
+        <HeroSection avatarList={avatarList} />
         <BrandSlider brandList={brandList} />
       </main>
     </div>
