@@ -45,7 +45,9 @@ export default function TestimonialsSection() {
           testimony: "var(--foreground)",
           arrowBackground: "var(--primary)",
           arrowForeground: "var(--primary-foreground)",
-          arrowHoverBackground: "var(--color-orange-500)",
+          // Hover turns them white with a black arrow, like the site's other buttons
+          arrowHoverBackground: "var(--background)",
+          arrowHoverForeground: "var(--foreground)",
         }}
         fontSizes={{ name: "28px", designation: "20px", quote: "20px" }}
       />

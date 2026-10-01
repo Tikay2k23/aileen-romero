@@ -1,11 +1,15 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import IntroAnimation from "@/components/ui/scroll-morph-hero";
 
 export default function Preloader({ children }: { children: React.ReactNode }) {
-  const [visible, setVisible] = useState(true);
+  const pathname = usePathname();
+  // The intro belongs to the home page: landing directly on a work page skips it.
+  // Only the first page load decides; the layout (and this state) persists across client navigation.
+  const [visible, setVisible] = useState(() => !pathname.startsWith("/work/"));
 
   // Keep the page behind from scrolling while the intro plays
   useEffect(() => {

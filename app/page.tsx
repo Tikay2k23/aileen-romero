@@ -4,18 +4,20 @@ import CapabilityPillars from "@/components/capability-pillars";
 import FaqSection from "@/components/faq-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import ContactCtaSection from "@/components/contact-cta-section";
-import { MinimalFooter } from "@/components/ui/minimal-footer";
+import { StickyFooter } from "@/components/ui/sticky-footer";
+import SmoothScroll from "@/components/smooth-scroll";
 
 export default function Home() {
   return (
     <>
+      <SmoothScroll />
       <HeroOne />
       <Skiper31 />
       <CapabilityPillars />
       <FaqSection />
       <TestimonialsSection />
       <ContactCtaSection />
-      <MinimalFooter />
+      <StickyFooter />
     </>
   );
 }

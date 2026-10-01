@@ -1,16 +1,11 @@
 "use client";
 
-import { Instrument_Serif } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
 import PageGlow from "@/components/page-glow";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
-});
+import { instrumentSerif } from "@/lib/fonts";
+import { openProjectInquiry } from "@/lib/project-inquiry";
 
 export type AvatarList = {
   image: string;
@@ -59,11 +54,14 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                 transition={{ duration: 1, delay: 0.2, ease: "easeInOut" }}
                 className="flex items-center flex-col md:flex-row justify-center gap-8"
               >
-                <Button className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer">
+                <Button
+                  onClick={() => openProjectInquiry("get-started")}
+                  className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer"
+                >
                   <span className="relative z-10 transition-all duration-500">
                     Get Started
                   </span>
-                  <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45">
+                  <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground">
                     <ArrowUpRight size={16} />
                   </span>
                 </Button>
@@ -87,7 +85,7 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                       {Array.from({ length: 5 }).map((_, index) => (
                         <Star
                           key={index}
-                          className="h-4 w-4 fill-orange-400 text-orange-400"
+                          className="h-4 w-4 fill-purple-400 text-purple-400"
                         />
                       ))}
                     </div>

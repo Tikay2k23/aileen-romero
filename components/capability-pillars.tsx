@@ -5,20 +5,23 @@ import { useLenis } from "lenis/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 import PageGlow from "@/components/page-glow";
+import { InteractiveHoverLinks } from "@/components/ui/interactive-hover-links";
 import { LetsWorkTogether } from "@/components/ui/lets-work-section";
+import { instrumentSerif } from "@/lib/fonts";
+import { WORK_AREAS, workHref } from "@/lib/work";
 import { cn } from "@/lib/utils";
 
 // Each panel needs a solid background: the next pillar swings in over the pinned one
-type Tone = "orange" | "dark" | "light";
+type Tone = "purple" | "dark" | "light";
 
 const TONES: Record<
   Tone,
   { style: CSSProperties; rule: string; muted: string; chip: string; highlightChip: string }
 > = {
-  orange: {
-    style: { backgroundColor: "var(--color-orange-500)", color: "#fff" },
+  purple: {
+    style: { backgroundColor: "var(--color-purple-500)", color: "#fff" },
     rule: "border-white/30",
-    // labels stay full white here: dimming them would cut contrast on orange further
+    // labels stay full white here: dimming them would cut their contrast against the purple
     muted: "text-white",
     chip: "border-white/35 bg-white/10",
     highlightChip: "border-white/60 bg-white/20",
@@ -28,14 +31,14 @@ const TONES: Record<
     rule: "border-white/15",
     muted: "text-white/60",
     chip: "border-white/15 bg-white/5",
-    highlightChip: "border-orange-500/40 bg-orange-500/10 text-orange-400",
+    highlightChip: "border-purple-500/40 bg-purple-500/10 text-purple-400",
   },
   light: {
     style: { backgroundColor: "var(--background)", color: "var(--foreground)" },
     rule: "border-black/10",
     muted: "text-muted-foreground",
     chip: "border-border bg-white/70",
-    highlightChip: "border-orange-500/40 bg-orange-500/10",
+    highlightChip: "border-purple-500/40 bg-purple-500/10",
   },
 };
 
@@ -63,7 +66,7 @@ const PILLARS: Pillar[] = [
     number: "01",
     category: "Marketing Automation",
     heading: "GoHighLevel Automation & Marketing Systems",
-    tone: "orange",
+    tone: "purple",
     columns: "wide-narrow",
     groups: [
       {
@@ -200,7 +203,7 @@ const PILLARS: Pillar[] = [
     number: "04",
     category: "AI-Augmented Systems",
     heading: "AI That Actually Connects to Business Operations",
-    tone: "orange",
+    tone: "purple",
     columns: "wide-narrow",
     groups: [
       {
@@ -229,6 +232,14 @@ const PILLARS: Pillar[] = [
   },
 ];
 
+// The six areas of work, each opening its own page (app/work/[slug])
+const WORK_LINKS = WORK_AREAS.map((area) => ({
+  heading: area.name,
+  subheading: area.summary,
+  imgSrc: area.image,
+  href: workHref(area.slug),
+}));
+
 // Keep GSAP's pins in step with Lenis smooth scrolling: update on the same frame as each scroll
 const syncScrollTrigger = () => ScrollTrigger.update();
 
@@ -237,11 +248,13 @@ export default function CapabilityPillars() {
 
   return (
     <FlowArt aria-label="Capability pillars">
-      {PILLARS.map((pillar) => {
+      {PILLARS.map((pillar, index) => {
         const tone = TONES[pillar.tone];
         return (
           <FlowSection
             key={pillar.number}
+            // The pillars are the services: the nav's Services link lands on the first one
+            id={index === 0 ? "services" : undefined}
             aria-label={`Pillar ${pillar.number} — ${pillar.category}`}
             style={tone.style}
           >
@@ -306,7 +319,28 @@ export default function CapabilityPillars() {
         );
       })}
 
-      {/* Closing panel: swings in over the last pillar like the others */}
+      {/* The work, after the pillars: each of the six opens a page of its projects. Swings in over the last
+          pillar like the others. */}
+      <FlowSection id="work" aria-label="My Work" style={TONES.light.style}>
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <div className="flex flex-1 flex-col justify-center">
+          {/* Left-aligned with the list below: the same padding and max width as InteractiveHoverLinks */}
+          <div className="mb-6 px-4 md:mb-0 md:px-8">
+            <div className="mx-auto flex max-w-5xl flex-col gap-4">
+              <h2 className="max-w-2xl text-4xl font-semibold tracking-tight text-balance md:text-6xl">
+                {/* Serif italic accent, like the hero's "real growth" */}
+                Ideas Turned Into <span className={instrumentSerif.className}>Systems.</span>
+              </h2>
+              <p className="max-w-2xl text-base text-muted-foreground">
+                Explore the projects I&apos;ve built and see the systems, experiences, and solutions in action.
+              </p>
+            </div>
+          </div>
+          <InteractiveHoverLinks links={WORK_LINKS} />
+        </div>
+      </FlowSection>
+
+      {/* Closing panel: swings in over the work */}
       <FlowSection id="contact" aria-label="Let's work together" style={TONES.light.style}>
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <LetsWorkTogether className="min-h-0 flex-1" />

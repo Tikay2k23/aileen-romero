@@ -22,6 +22,7 @@ interface Colors {
   arrowBackground?: string;
   arrowForeground?: string;
   arrowHoverBackground?: string;
+  arrowHoverForeground?: string;
 }
 interface FontSizes {
   name?: string;
@@ -59,6 +60,9 @@ export const CircularTestimonials = ({
   const colorArrowBg = colors.arrowBackground ?? "#141414";
   const colorArrowFg = colors.arrowForeground ?? "#f1f1f7";
   const colorArrowHoverBg = colors.arrowHoverBackground ?? "#00a6fb";
+  const colorArrowHoverFg = colors.arrowHoverForeground ?? colorArrowFg;
+  // A hairline in the resting colour: unseen at rest, it outlines a light hover colour against a light page
+  const arrowOutline = `inset 0 0 0 1px ${colorArrowBg}`;
   const fontSizeName = fontSizes.name ?? "1.5rem";
   const fontSizeDesignation = fontSizes.designation ?? "0.925rem";
   const fontSizeQuote = fontSizes.quote ?? "1.125rem";
@@ -253,25 +257,35 @@ export const CircularTestimonials = ({
               onClick={handlePrev}
               style={{
                 backgroundColor: hoverPrev ? colorArrowHoverBg : colorArrowBg,
+                boxShadow: arrowOutline,
               }}
               onMouseEnter={() => setHoverPrev(true)}
               onMouseLeave={() => setHoverPrev(false)}
               aria-label="Previous testimonial"
             >
               {/* Colour via CSS so theme variables work (SVG attributes can't resolve var()) */}
-              <ArrowLeft size={28} style={{ color: colorArrowFg }} />
+              <ArrowLeft
+                size={28}
+                className="transition-colors duration-300"
+                style={{ color: hoverPrev ? colorArrowHoverFg : colorArrowFg }}
+              />
             </button>
             <button
               className="flex size-[2.7rem] cursor-pointer items-center justify-center rounded-full border-none transition-colors duration-300"
               onClick={handleNext}
               style={{
                 backgroundColor: hoverNext ? colorArrowHoverBg : colorArrowBg,
+                boxShadow: arrowOutline,
               }}
               onMouseEnter={() => setHoverNext(true)}
               onMouseLeave={() => setHoverNext(false)}
               aria-label="Next testimonial"
             >
-              <ArrowRight size={28} style={{ color: colorArrowFg }} />
+              <ArrowRight
+                size={28}
+                className="transition-colors duration-300"
+                style={{ color: hoverNext ? colorArrowHoverFg : colorArrowFg }}
+              />
             </button>
           </div>
         </div>

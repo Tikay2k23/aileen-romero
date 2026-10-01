@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import Preloader from "@/components/preloader";
+import ProjectInquiry from "@/components/project-inquiry";
+import GhlChatWidget from "@/components/ghl-chat-widget";
+import { ignoreKnownGhlWidgetBug } from "@/lib/ghl-error-guard";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,6 +30,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Preloader>{children}</Preloader>
+        <ProjectInquiry />
+        <GhlChatWidget />
+        {/* Quiets a known bug in the GoHighLevel chat widget: see lib/ghl-error-guard.ts */}
+        <Script id="ghl-known-bug-guard" strategy="beforeInteractive">
+          {ignoreKnownGhlWidgetBug}
+        </Script>
       </body>
     </html>
   );

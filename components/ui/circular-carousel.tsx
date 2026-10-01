@@ -220,7 +220,7 @@ export function CircularCarousel({
           whileTap={{ scale: 0.95 }}
           onClick={prev}
           aria-label="Previous item"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
         >
           <ChevronLeft className="size-5" />
         </motion.button>
@@ -249,7 +249,7 @@ export function CircularCarousel({
           whileTap={{ scale: 0.95 }}
           onClick={next}
           aria-label="Next item"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
         >
           <ChevronRight className="size-5" />
         </motion.button>

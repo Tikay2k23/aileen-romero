@@ -2,10 +2,14 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowDown } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useIsSmallScreen } from "@/hooks/use-is-small-screen";
+import { cn } from "@/lib/utils";
+
+// The CV the button downloads: put the PDF in public/ under this name
+const CV_PATH = "/aileen-romero-cv.pdf";
 
 const CARDS = [
   {
@@ -63,14 +67,15 @@ const HeroSectionwithCards: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={inView}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="text-4xl md:text-6xl font-bold text-zinc-900 dark:text-white max-w-2xl leading-tight tracking-tight"
+          // Wide enough for each of the two lines to stay whole on larger screens
+          className="text-4xl md:text-6xl font-bold text-zinc-900 dark:text-white max-w-4xl leading-tight tracking-tight text-balance"
         >
-          Create{" "}
+          Building{" "}
           <em className="font-bold italic text-zinc-700 dark:text-zinc-300">
-            Social Content
+            smarter systems
           </em>
           <br />
-          that&apos;s ready to perform
+          for growing businesses
         </motion.h2>
 
         <motion.p
@@ -78,10 +83,11 @@ const HeroSectionwithCards: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={inView}
           transition={{ duration: 0.5, delay: 0.38, ease: "easeOut" }}
-          className="mt-5 text-base text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed"
+          className="mt-5 text-base text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed"
         >
-          Create, schedule, and optimize your entire social strategy in minutes,
-          not hours.
+          Hi, I&apos;m Aileen Romero. I have 4+ years of hands-on experience with GoHighLevel, building
+          automation, CRM systems, AI workflows, funnels, websites, and digital solutions that help businesses
+          streamline their operations and grow.
         </motion.p>
 
         <motion.div
@@ -91,14 +97,22 @@ const HeroSectionwithCards: React.FC = () => {
           transition={{ duration: 0.4, delay: 0.52 }}
           className="mt-8"
         >
-          <Button className="relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer">
+          {/* A download link styled like the site's pill buttons; the arrow points down instead of turning */}
+          <a
+            href={CV_PATH}
+            download="Aileen-Romero-CV.pdf"
+            className={cn(
+              buttonVariants(),
+              "relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer",
+            )}
+          >
             <span className="relative z-10 transition-all duration-500">
-              Try it Free
+              Download My CV
             </span>
-            <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45">
-              <ArrowUpRight size={16} />
+            <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:bg-primary group-hover:text-primary-foreground">
+              <ArrowDown size={16} />
             </span>
-          </Button>
+          </a>
         </motion.div>
 
         <div className="relative mt-10 flex h-[300px] w-full items-end justify-center sm:h-[380px]">

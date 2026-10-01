@@ -19,6 +19,8 @@ export interface FloatingIconsHeroProps {
   subtitle: string;
   ctaText: string;
   ctaHref: string;
+  // When set, a click does this instead of following ctaHref (which stays as the fallback without JavaScript)
+  onCtaClick?: () => void;
   icons: IconProps[];
 }
 
@@ -115,7 +117,7 @@ const Icon = ({
 const FloatingIconsHero = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & FloatingIconsHeroProps
->(({ className, title, subtitle, ctaText, ctaHref, icons, ...props }, ref) => {
+>(({ className, title, subtitle, ctaText, ctaHref, onCtaClick, icons, ...props }, ref) => {
   // Refs to track the raw mouse position
   const mouseX = React.useRef(0);
   const mouseY = React.useRef(0);
@@ -160,13 +162,20 @@ const FloatingIconsHero = React.forwardRef<
           {/* A real link styled like the site's pill buttons (e.g. the hero's "Get Started") */}
           <a
             href={ctaHref}
+            onClick={
+              onCtaClick &&
+              ((event) => {
+                event.preventDefault();
+                onCtaClick();
+              })
+            }
             className={cn(
               buttonVariants(),
               'relative text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer'
             )}
           >
             <span className="relative z-10 transition-all duration-500">{ctaText}</span>
-            <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45">
+            <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground">
               <ArrowUpRight size={16} />
             </span>
           </a>

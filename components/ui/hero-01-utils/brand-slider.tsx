@@ -1,14 +1,9 @@
 "use client";
 import { Marquee } from "@/components/ui/hero-01-utils/marquee";
 import { motion } from "motion/react";
+import { ToolIcon, TOOL_NAMES, type Tool } from "@/components/ui/tool-icons";
 
-export interface BrandList {
-  image: string;
-  name: string;
-  lightimg: string;
-}
-
-function BrandSlider({ brandList }: { brandList: BrandList[] }) {
+function BrandSlider({ tools }: { tools: Tool[] }) {
   return (
     <section>
       <div className="py-6 md:py-10">
@@ -23,33 +18,29 @@ function BrandSlider({ brandList }: { brandList: BrandList[] }) {
             <div className="flex justify-center text-center py-3 md:py-4 relative">
               <div className="flex items-center justify-center gap-4">
                 <div className="hidden md:block h-0.5 w-40 bg-linear-to-l from-muted-foreground to-white dark:from-muted-foreground dark:to-transparent opacity-20" />
+                {/* The marks are the tools themselves, not clients: the line says so */}
                 <p className="text-sm font-normal sm:px-2 px-10 text-muted-foreground text-center">
-                  Loved by 1000+ big and small brands around the worlds
+                  The tools I connect into one system
                 </p>
                 <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-muted-foreground to-white dark:from-muted-foreground dark:to-transparent opacity-20" />
               </div>
             </div>
-            {brandList && brandList.length > 0 && (
-              <div className="py-4">
-                <Marquee pauseOnHover className="[--duration:20s] p-0">
-                  {brandList.map((brand, index) => (
-                    <div key={index}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={brand.image}
-                        alt={brand.name}
-                        className="w-36 h-8 mr-6 lg:mr-20 dark:hidden"
-                      />
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={brand.lightimg}
-                        alt={brand.name}
-                        className="hidden dark:block w-36 h-8 mr-12 lg:mr-20"
-                      />
-                    </div>
-                  ))}
-                </Marquee>
-              </div>
+            {tools.length > 0 && (
+              // The same tiles as the floating icons in "Ready to Connect Your Tools?"
+              // (components/contact-cta-section.tsx), solid rather than blurred since they never stop moving.
+              // Room above and below for their shadows; the ends fade out.
+              <Marquee pauseOnHover className="[--duration:30s] [--gap:1.5rem] px-0 py-4 mask-x-from-90%">
+                {tools.map((tool) => (
+                  <div
+                    key={tool}
+                    title={TOOL_NAMES[tool]}
+                    className="flex size-14 items-center justify-center rounded-2xl border border-border/10 bg-card p-3 shadow-lg md:size-16"
+                  >
+                    <ToolIcon tool={tool} className="size-7 text-foreground md:size-8" />
+                    <span className="sr-only">{TOOL_NAMES[tool]}</span>
+                  </div>
+                ))}
+              </Marquee>
             )}
           </motion.div>
         </div>

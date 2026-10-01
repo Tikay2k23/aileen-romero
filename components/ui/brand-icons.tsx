@@ -1,5 +1,3 @@
-import Logo from '@/components/ui/hero-01-utils/logo';
-
 // Brand marks from Simple Icons (CC0): lucide-react 1.x no longer ships brand icons
 const BRAND_PATHS = {
 	facebook: "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978c.401 0 .955.042 1.468.103a9 9 0 0 1 1.141.195v3.325a9 9 0 0 0-.653-.036a27 27 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.7 1.7 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103l-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647",
@@ -10,112 +8,12 @@ const BRAND_PATHS = {
 	youtube: "M23.498 6.186a3.02 3.02 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.02 3.02 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.02 3.02 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.02 3.02 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814M9.545 15.568V8.432L15.818 12z",
 } as const;
 
-type Brand = keyof typeof BRAND_PATHS;
+export type Brand = keyof typeof BRAND_PATHS;
 
-function BrandIcon({ brand, className }: { brand: Brand; className?: string }) {
+export function BrandIcon({ brand, className }: { brand: Brand; className?: string }) {
 	return (
 		<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
 			<path d={BRAND_PATHS[brand]} />
 		</svg>
-	);
-}
-
-export function MinimalFooter() {
-	const year = new Date().getFullYear();
-
-	const services = [
-		{ title: 'Automation', href: '#' },
-		{ title: 'Intelligence', href: '#' },
-		{ title: 'Growth', href: '#' },
-		{ title: 'Digital', href: '#' },
-		{ title: 'Creative', href: '#' },
-		{ title: 'Engineering', href: '#' },
-	];
-
-	const navigation = [
-		{ title: 'Home', href: '#' },
-		{ title: 'About', href: '#' },
-		{ title: 'Work', href: '#' },
-		{ title: 'Services', href: '#' },
-		{ title: 'Contact', href: '#' },
-	];
-
-	// Placeholder profile links: swap '#' for real URLs (external links open in a new tab)
-	const socialLinks: { name: string; brand: Brand; link: string }[] = [
-		{ name: 'Facebook', brand: 'facebook', link: '#' },
-		{ name: 'GitHub', brand: 'github', link: '#' },
-		{ name: 'Instagram', brand: 'instagram', link: '#' },
-		{ name: 'LinkedIn', brand: 'linkedin', link: '#' },
-		{ name: 'X', brand: 'x', link: '#' },
-		{ name: 'YouTube', brand: 'youtube', link: '#' },
-	];
-	return (
-		<footer className="relative">
-			<div className="bg-[radial-gradient(35%_80%_at_30%_0%,--theme(--color-foreground/.1),transparent)] mx-auto max-w-4xl md:border-x">
-				<div className="bg-border absolute inset-x-0 h-px w-full" />
-				<div className="grid max-w-4xl grid-cols-6 gap-6 p-4">
-					<div className="col-span-6 flex flex-col gap-5 md:col-span-4">
-						<a href="#" className="w-max">
-							<Logo />
-						</a>
-						<p className="text-muted-foreground max-w-sm font-mono text-sm text-balance">
-							I build scalable digital systems that connect marketing, CRM, automation, AI, and customer workflows.
-						</p>
-						<div className="flex gap-2">
-							{socialLinks.map((item) => {
-								const external = item.link.startsWith('http');
-								return (
-									<a
-										key={item.name}
-										aria-label={item.name}
-										className="hover:bg-accent rounded-md border p-1.5"
-										href={item.link}
-										{...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-									>
-										<BrandIcon brand={item.brand} className="size-4" />
-									</a>
-								);
-							})}
-						</div>
-					</div>
-					<div className="col-span-3 w-full md:col-span-1">
-						<span className="text-muted-foreground mb-1 text-xs">
-							Services
-						</span>
-						<div className="flex flex-col gap-1">
-							{services.map(({ href, title }, i) => (
-								<a
-									key={i}
-									className="w-max py-1 text-sm duration-200 hover:underline"
-									href={href}
-								>
-									{title}
-								</a>
-							))}
-						</div>
-					</div>
-					<div className="col-span-3 w-full md:col-span-1">
-						<span className="text-muted-foreground mb-1 text-xs">Navigate</span>
-						<div className="flex flex-col gap-1">
-							{navigation.map(({ href, title }, i) => (
-								<a
-									key={i}
-									className="w-max py-1 text-sm duration-200 hover:underline"
-									href={href}
-								>
-									{title}
-								</a>
-							))}
-						</div>
-					</div>
-				</div>
-				<div className="bg-border absolute inset-x-0 h-px w-full" />
-				<div className="flex max-w-4xl flex-col justify-between gap-2 pt-2 pb-5">
-					<p className="text-muted-foreground text-center font-thin">
-						© {year} Aileen Romero. All rights reserved.
-					</p>
-				</div>
-			</div>
-		</footer>
 	);
 }

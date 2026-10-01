@@ -1,11 +1,8 @@
 "use client";
 
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import ReactLenis from "lenis/react";
-import "lenis/dist/lenis.css";
 import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { InteractiveHoverLinks } from "@/components/ui/interactive-hover-links";
 import { CircularCarousel, type CarouselItem } from "@/components/ui/circular-carousel";
 import HeroSectionwithCards from "@/components/ui/hero-with-cards";
 import AboutBento from "@/components/ui/about-bento";
@@ -33,7 +30,7 @@ const CharacterV1 = ({
 
   return (
     <motion.span
-      className={cn("inline-block text-orange-500", isSpace && "w-[0.27em]")}
+      className={cn("inline-block text-purple-500", isSpace && "w-[0.27em]")}
       style={{ x, rotateX }}
     >
       {char}
@@ -156,174 +153,121 @@ const Skiper31 = () => {
     },
   ];
 
-  const portfolioLinks = [
-    {
-      heading: "Automation",
-      subheading: "CRM systems, workflows, funnels, and automated customer journeys.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-    {
-      heading: "Intelligence",
-      subheading: "AI-powered workflows, APIs, webhooks, and connected systems.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-    {
-      heading: "Growth",
-      subheading: "Meta Ads, Google Ads, tracking, optimization, and lead generation.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-    {
-      heading: "Digital",
-      subheading: "Conversion-focused websites, landing pages, and digital experiences.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-    {
-      heading: "Creative",
-      subheading: "Video editing, graphic design, content creation, and marketing visuals.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-    {
-      heading: "Engineering",
-      subheading: "Full-stack applications, databases, and scalable digital solutions.",
-      imgSrc:
-        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format&fit=crop",
-      href: "#",
-    },
-  ];
-
   return (
-    <ReactLenis root>
-      <section className="w-full">
-        {/* Block 1 — text */}
+    <section className="w-full">
+      {/* Block 1 — text */}
+      <div
+        ref={targetRef}
+        className="relative isolate box-border flex h-[210vh] items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
+      >
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <div
-          ref={targetRef}
-          className="relative isolate box-border flex h-[210vh] items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
+          className="font-geist w-full max-w-4xl text-center text-[clamp(1.5rem,7vw,3.75rem)] leading-none font-bold uppercase tracking-tighter text-black"
+          style={{ perspective: "500px" }}
         >
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <div
-            className="font-geist w-full max-w-4xl text-center text-[clamp(1.5rem,7vw,3.75rem)] leading-none font-bold uppercase tracking-tighter text-black"
-            style={{ perspective: "500px" }}
-          >
-            {words.map((word, w) => (
-              <React.Fragment key={w}>
-                {w > 0 && (
+          {words.map((word, w) => (
+            <React.Fragment key={w}>
+              {w > 0 && (
+                <CharacterV1
+                  char=" "
+                  index={wordStarts[w] - 1}
+                  centerIndex={centerIndex}
+                  scrollYProgress={scrollYProgress}
+                />
+              )}
+              <span className="inline-block whitespace-nowrap">
+                {word.split("").map((char, i) => (
                   <CharacterV1
-                    char=" "
-                    index={wordStarts[w] - 1}
+                    key={i}
+                    char={char}
+                    index={wordStarts[w] + i}
                     centerIndex={centerIndex}
                     scrollYProgress={scrollYProgress}
                   />
-                )}
-                <span className="inline-block whitespace-nowrap">
-                  {word.split("").map((char, i) => (
-                    <CharacterV1
-                      key={i}
-                      char={char}
-                      index={wordStarts[w] + i}
-                      centerIndex={centerIndex}
-                      scrollYProgress={scrollYProgress}
-                    />
-                  ))}
-                </span>
-              </React.Fragment>
-            ))}
-          </div>
+                ))}
+              </span>
+            </React.Fragment>
+          ))}
         </div>
+      </div>
 
-        {/* Block 2 — icons */}
-        <div
-          ref={targetRef2}
-          className="relative isolate -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
-        >
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
-            <Bracket className="h-12 text-black" />
-            <span className="font-geist font-medium">my fav tech stack</span>
-            <Bracket className="h-12 scale-x-[-1] text-black" />
+      {/* Block 2 — icons */}
+      <div
+        ref={targetRef2}
+        className="relative isolate -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
+      >
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
+          <Bracket className="h-12 text-black" />
+          <span className="font-geist font-medium">my fav tech stack</span>
+          <Bracket className="h-12 scale-x-[-1] text-black" />
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-8">
+          {macIcon.map((char, index) => (
+            <CharacterV2
+              key={index}
+              char={char}
+              index={index}
+              centerIndex={iconCenterIndex}
+              scrollYProgress={scrollYProgress2}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Block 3 — icons (rotating variant) */}
+      <div
+        ref={targetRef3}
+        className="relative isolate -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
+      >
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
+          <Bracket className="h-12 text-black" />
+          <span className="font-geist font-medium">my fav tech stack</span>
+          <Bracket className="h-12 scale-x-[-1] text-black" />
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>
+          {macIcon.map((char, index) => (
+            <CharacterV3
+              key={index}
+              char={char}
+              index={index}
+              centerIndex={iconCenterIndex}
+              scrollYProgress={scrollYProgress3}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Block 4 — about bento grid, pulled up over Block 3's trailing scroll space. The nav's About link lands here. */}
+      <div id="about" className="relative isolate -mt-[85vh]">
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <AboutBento />
+      </div>
+
+      {/* Block 5 — fanned photo cards */}
+      <div className="relative isolate">
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <HeroSectionwithCards />
+      </div>
+
+      {/* Block 6 — services carousel.
+          Clipped horizontally so the outer cards can't cause side-scroll on narrow screens */}
+      <div className="relative isolate overflow-x-clip px-4 py-16 md:py-24">
+        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
+          <h2 className="text-4xl font-medium tracking-tight text-balance md:text-6xl">
+            Systems I Can Build From End to End
+          </h2>
+          <p className="text-base text-muted-foreground">
+            Ways I can help bring your brand to life, from first sketch to final launch.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {macIcon.map((char, index) => (
-              <CharacterV2
-                key={index}
-                char={char}
-                index={index}
-                centerIndex={iconCenterIndex}
-                scrollYProgress={scrollYProgress2}
-              />
-            ))}
-          </div>
         </div>
-
-        {/* Block 3 — icons (rotating variant) */}
-        <div
-          ref={targetRef3}
-          className="relative isolate -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
-        >
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
-            <Bracket className="h-12 text-black" />
-            <span className="font-geist font-medium">my fav tech stack</span>
-            <Bracket className="h-12 scale-x-[-1] text-black" />
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>
-            {macIcon.map((char, index) => (
-              <CharacterV3
-                key={index}
-                char={char}
-                index={index}
-                centerIndex={iconCenterIndex}
-                scrollYProgress={scrollYProgress3}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Block 4 — about bento grid, pulled up over Block 3's trailing scroll space */}
-        <div className="relative isolate -mt-[85vh]">
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <AboutBento />
-        </div>
-
-        {/* Block 5 — fanned photo cards */}
-        <div className="relative isolate">
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <HeroSectionwithCards />
-        </div>
-
-        {/* Block 6 — services carousel.
-            Clipped horizontally so the outer cards can't cause side-scroll on narrow screens */}
-        <div className="relative isolate overflow-x-clip px-4 py-16 md:py-24">
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
-            <h2 className="text-4xl font-medium tracking-tight text-balance md:text-6xl">
-              Systems I Can Build From End to End
-            </h2>
-            <p className="text-base text-muted-foreground">
-              Ways I can help bring your brand to life, from first sketch to final launch.
-            </p>
-          </div>
-          <CircularCarousel items={services} className="mt-16" />
-        </div>
-
-        {/* Block 7 — hover links */}
-        <div className="relative isolate">
-          <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-          <InteractiveHoverLinks links={portfolioLinks} />
-        </div>
-      </section>
-    </ReactLenis>
+        <CircularCarousel items={services} className="mt-16" />
+      </div>
+    </section>
   );
 };
 

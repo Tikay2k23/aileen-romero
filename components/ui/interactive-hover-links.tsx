@@ -2,7 +2,11 @@
 
 import { useMotionValue, motion, useSpring, useTransform } from "motion/react";
 import React, { useRef } from "react";
+import NextLink from "next/link";
 import { ArrowRight } from "lucide-react";
+
+// Client-side navigation: a full page load would replay the intro preloader
+const MotionLink = motion.create(NextLink);
 
 interface InteractiveHoverLinksProps {
   links?: typeof INTERACTIVE_LINKS;
@@ -59,7 +63,7 @@ function Link({ heading, imgSrc, subheading, href }: LinkProps) {
   };
 
   return (
-    <motion.a
+    <MotionLink
       href={href}
       ref={ref}
       onMouseMove={handleMouseMove}
@@ -146,7 +150,7 @@ function Link({ heading, imgSrc, subheading, href }: LinkProps) {
           <ArrowRight className="size-8 text-foreground md:size-12" />
         </motion.div>
       </div>
-    </motion.a>
+    </MotionLink>
   );
 };
 
