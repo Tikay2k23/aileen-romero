@@ -66,40 +66,14 @@ const CharacterV2 = ({
 };
 
 
-const CharacterV3 = ({
-  char,
-  label,
-  index,
-  centerIndex,
-  scrollYProgress,
-}: CharacterProps) => {
-  const distanceFromCenter = index - centerIndex;
-
-  const x = useTransform(scrollYProgress, [0, 0.5], [distanceFromCenter * 90, 0]);
-  const rotate = useTransform(scrollYProgress, [0, 0.5], [distanceFromCenter * 50, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [-Math.abs(distanceFromCenter) * 20, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.75, 1]);
-
-  return (
-    <motion.img
-      src={char}
-      alt={label ?? ""}
-      className="h-16 w-16 shrink-0 object-contain will-change-transform"
-      style={{ x, rotate, y, scale, transformOrigin: "center" }}
-    />
-  );
-};
-
 // photos: yours for the cards under "Download My CV", read from public/photo-cards/ by the page. toolStack: the icons
 // under "my fav tool stack" (lib/tool-stack.ts).
 const Skiper31 = ({ photos, toolStack }: { photos?: CardPhoto[]; toolStack?: StackIcon[] }) => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const targetRef2 = useRef<HTMLDivElement | null>(null);
-  const targetRef3 = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({ target: targetRef });
   const { scrollYProgress: scrollYProgress2 } = useScroll({ target: targetRef2 });
-  const { scrollYProgress: scrollYProgress3 } = useScroll({ target: targetRef3 });
 
 
   const text = "see more from Aileen";
@@ -217,45 +191,19 @@ const Skiper31 = ({ photos, toolStack }: { photos?: CardPhoto[]; toolStack?: Sta
         </div>
       </div>
 
-      {/* Block 3 — icons (rotating variant) */}
-      <div
-        ref={targetRef3}
-        className="relative isolate -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
-      >
-        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-        <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
-          <Bracket className="h-12 text-black" />
-          <span className="font-geist font-medium">my fav tool stack</span>
-          <Bracket className="h-12 scale-x-[-1] text-black" />
-        </p>
-
-        <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>
-          {icons.map((icon, index) => (
-            <CharacterV3
-              key={icon.name}
-              char={icon.src}
-              label={icon.name}
-              index={index}
-              centerIndex={iconCenterIndex}
-              scrollYProgress={scrollYProgress3}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Block 4 — about bento grid, pulled up over Block 3's trailing scroll space. The nav's About link lands here. */}
+      {/* Block 3 — about bento grid, pulled up over Block 2's trailing scroll space. The nav's About link lands here. */}
       <div id="about" className="relative isolate -mt-[85vh]">
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <AboutBento />
       </div>
 
-      {/* Block 5 — fanned photo cards */}
+      {/* Block 4 — fanned photo cards */}
       <div className="relative isolate">
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <HeroSectionwithCards photos={photos} />
       </div>
 
-      {/* Block 6 — services carousel.
+      {/* Block 5 — services carousel.
           Clipped horizontally so the outer cards can't cause side-scroll on narrow screens */}
       <div className="relative isolate overflow-x-clip px-4 py-16 md:py-24">
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
@@ -273,7 +221,7 @@ const Skiper31 = ({ photos, toolStack }: { photos?: CardPhoto[]; toolStack?: Sta
   );
 };
 
-export { CharacterV1, CharacterV2, CharacterV3, Skiper31 };
+export { CharacterV1, CharacterV2, Skiper31 };
 
 const Bracket = ({ className }: { className: string }) => {
   return (

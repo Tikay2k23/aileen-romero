@@ -6,8 +6,8 @@ import { toolIconSrc } from "@/components/ui/tool-icons";
 export type StackIcon = { src: string; name: string };
 
 // "my fav tool stack" (components/ui/text-scroll-animation.tsx): GoHighLevel first, from the logo dropped into
-// public/tool-stack/ (no free icon set carries its mark; until there's one it sits out), then Meta Ads, CapCut, Canva
-// and WordPress. Read when the home page is built, and on every reload in development.
+// public/tool-stack/ (no free icon set carries its mark; until there's one it sits out), then Meta Ads, CapCut, Canva,
+// WordPress, HubSpot and OpenAI. Read when the home page is built, and on every reload in development.
 export function toolStack(): StackIcon[] {
   const ghlLogo = imagesIn(path.join(process.cwd(), "public", "tool-stack"))[0];
   return [
@@ -16,5 +16,7 @@ export function toolStack(): StackIcon[] {
     { src: toolIconSrc("capcut"), name: "CapCut" },
     { src: toolIconSrc("canva"), name: "Canva" },
     { src: toolIconSrc("wordpress"), name: "WordPress" },
+    { src: toolIconSrc("hubspot"), name: "HubSpot" },
+    { src: toolIconSrc("openai"), name: "OpenAI" },
   ];
 }
