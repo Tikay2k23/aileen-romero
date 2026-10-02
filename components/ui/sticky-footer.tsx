@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { MotionConfig, motion, useInView } from 'motion/react';
 import { buttonVariants } from '@/components/ui/button';
@@ -110,15 +111,18 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 
 const linkClassName = 'hover:text-foreground inline-flex items-center transition-all duration-300';
 
-// Sections of the home page jump like the header's nav links; pages open with client-side navigation
+// The home page and its sections ("/", "/#about"): on the home page they jump like the header's nav links, from a
+// work page they open the home page there. Other pages open with client-side navigation.
 function FooterLinkItem({ link }: { link: FooterLink }) {
-	if (link.href.startsWith('#')) {
+	const pathname = usePathname();
+	const section = link.href === '/' ? '#' : link.href.startsWith('/#') ? link.href.slice(1) : null;
+	if (section && pathname === '/') {
 		return (
 			<a
 				href={link.href}
 				onClick={(event) => {
 					event.preventDefault();
-					goToSection(link.href);
+					goToSection(section);
 				}}
 				className={linkClassName}
 			>
@@ -151,13 +155,13 @@ const footerLinkGroups: FooterLinkGroup[] = [
 	},
 	{
 		label: 'Navigate',
-		// The same sections as the header's nav (components/ui/hero-01.tsx)
+		// The same sections as the header's nav (components/ui/hero-01.tsx), reachable from the work pages too
 		links: [
-			{ title: 'Home', href: '#' },
-			{ title: 'About', href: '#about' },
-			{ title: 'Services', href: '#services' },
-			{ title: 'Work', href: '#work' },
-			{ title: 'Contact', href: '#contact' },
+			{ title: 'Home', href: '/' },
+			{ title: 'About', href: '/#about' },
+			{ title: 'Services', href: '/#services' },
+			{ title: 'Work', href: '/#work' },
+			{ title: 'Contact', href: '/#contact' },
 		],
 	},
 ];

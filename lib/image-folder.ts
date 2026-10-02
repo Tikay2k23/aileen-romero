@@ -20,6 +20,12 @@ export function imagesIn(folder: string) {
   }
 }
 
+// The number a file name starts with ("07 Agency Site.png" → 7): how a text file next to the images points at one
+export function fileNumber(file: string) {
+  const match = /^\d+/.exec(file);
+  return match ? Number(match[0]) : null;
+}
+
 // "01 Lead Routing.png" → "Lead Routing": the order number in front is dropped, dashes and underscores read as
 // spaces. A name that's only a number comes out empty.
 export function titleFromFileName(file: string) {

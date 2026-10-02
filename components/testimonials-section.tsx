@@ -1,9 +1,10 @@
 import PageGlow from "@/components/page-glow";
 import { CircularTestimonials } from "@/components/ui/circular-testimonials";
+import { readTestimonials } from "@/lib/testimonials";
 
-// Placeholders: swap in real client testimonials (quote, name, role/company and photo).
-// Kept obviously generic on purpose so nothing reads as a real endorsement.
-const TESTIMONIALS = [
+// Placeholders until public/testimonials/testimonials.txt has real ones (lib/testimonials.ts), which then replace
+// them all. Kept obviously generic on purpose so nothing reads as a real endorsement.
+const PLACEHOLDERS = [
   {
     quote:
       "Add a client testimonial here: the problem they had, the system you built, and the result it delivered.",
@@ -37,7 +38,7 @@ export default function TestimonialsSection() {
         What Clients Say
       </h2>
       <CircularTestimonials
-        testimonials={TESTIMONIALS}
+        testimonials={readTestimonials() ?? PLACEHOLDERS}
         autoplay
         colors={{
           name: "var(--foreground)",

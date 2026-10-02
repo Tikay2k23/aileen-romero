@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
@@ -9,6 +10,8 @@ import { openProjectInquiry } from "@/lib/project-inquiry";
 
 export type AvatarList = {
   image: string;
+  // Who it is, for screen readers; without one the photo is treated as decoration
+  alt?: string;
 };
 
 type HeroSectionProps = {
@@ -69,13 +72,16 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                   <ul className="avatar flex flex-row items-center">
                     {avatarList.map((avatar, index) => (
                       <li key={index} className="-mr-2 z-1 avatar-hover:ml-2">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        {/* Your photos are resized and cropped to the circle; the stock ones come straight from their
+                            CDN */}
+                        <Image
                           src={avatar.image}
-                          alt="Avatar"
+                          alt={avatar.alt ?? ""}
                           width={40}
                           height={40}
-                          className="rounded-full border-2 border-white"
+                          loading="eager"
+                          unoptimized={avatar.image.startsWith("http")}
+                          className="size-10 rounded-full border-2 border-white object-cover"
                         />
                       </li>
                     ))}
@@ -90,7 +96,7 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                       ))}
                     </div>
                     <p className="sm:text-sm text-xs font-normal text-muted-foreground">
-                      Trusted by 1000+ clients
+                      Trusted by 15+ clients
                     </p>
                   </div>
                 </div>

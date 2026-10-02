@@ -4,9 +4,11 @@ import Header from "@/components/ui/hero-01-utils/header";
 import BrandSlider from "@/components/ui/hero-01-utils/brand-slider";
 import type { Tool } from "@/components/ui/tool-icons";
 import type { AvatarList } from "@/components/ui/hero-01-utils/hero";
+import { clientAvatars } from "@/lib/client-avatars";
 
 export default function AgencyHeroSection() {
-  const avatarList: AvatarList[] = [
+  // Stock faces, each replaced in turn by a photo dropped into public/client-avatars/ (lib/client-avatars.ts)
+  const stockAvatars: AvatarList[] = [
     {
       image:
         "https://cdn.21st.dev/assets/localized/59a2b5a0dfc1531e2d1ea42d71ae8615f37582e1f8a17e4a1b1aff9afc7ef878.jpg",
@@ -24,6 +26,8 @@ export default function AgencyHeroSection() {
         "https://cdn.21st.dev/assets/localized/51c9ed392f6e7fce7fd85a78648e3e06bfdcd91999ab5fa48485888231589abf.jpg",
     },
   ];
+  const yourAvatars = clientAvatars();
+  const avatarList = stockAvatars.map((stock, index) => yourAvatars[index] ?? stock);
 
   const navigationData: NavigationSection[] = [
     {

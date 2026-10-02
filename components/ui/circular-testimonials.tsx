@@ -14,6 +14,8 @@ interface Testimonial {
   name: string;
   designation: string;
   src: string;
+  // Sizes of the photo for different screens, when it has them (lib/testimonials.ts)
+  srcSet?: string;
 }
 interface Colors {
   name?: string;
@@ -191,6 +193,7 @@ export const CircularTestimonials = ({
             <img
               key={testimonial.src}
               src={testimonial.src}
+              srcSet={testimonial.srcSet}
               alt={testimonial.name}
               className="absolute h-full w-full rounded-3xl object-cover shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
               data-index={index}

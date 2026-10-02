@@ -46,7 +46,8 @@ export default function ContactCtaSection() {
         title="Ready to Connect Your Tools?"
         subtitle="I connect GoHighLevel, n8n, Make, Zapier, HubSpot and the rest of your stack into one system that runs your marketing and sales."
         ctaText="Contact Me"
-        ctaHref="#contact"
+        // Without JavaScript: the "Let's work together" panel, from the home page or a work page
+        ctaHref="/#contact"
         onCtaClick={() => openProjectInquiry("contact-me")}
         icons={ICONS}
       />

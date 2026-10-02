@@ -1,14 +1,8 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
-import { imagesIn, titleFromFileName } from "@/lib/image-folder";
+import { fileNumber, imagesIn, titleFromFileName } from "@/lib/image-folder";
 import type { WorkArea, WorkProject } from "@/lib/work";
-
-// The number a file name starts with ("07 Agency Site.png" → 7): how links.txt points at an image
-function fileNumber(file: string) {
-  const match = /^\d+/.exec(file);
-  return match ? Number(match[0]) : null;
-}
 
 type CardLink = Pick<WorkProject, "link" | "linkLabel">;
 
