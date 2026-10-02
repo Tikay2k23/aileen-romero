@@ -6,3 +6,19 @@
 # Examples (remove the # at the start of a line to use it):
 # 01 https://example.com
 # 02 https://example.com/another | See the funnel
+
+01 https://sites.leadconnectorhq.com/preview/nvHe9xoWklWxElMIOl6C | See the Website
+
+02 https://goodmenclub.com | See the Website
+
+03 https://landingpage.lipsinc.com/ | See the Funnel
+
+04 https://bestlifechiro.org/ | See the Funnel
+
+05 https://pediatric.bestlifechiro.org/ | See the Funnel
+
+06 https://coaching.coachibly.com/event-page | See the Funnel
+
+07 https://premium-real-estate-website-lac.vercel.app/ | See the Website
+
+08 https://workshop.coachbrinichols.com/landing-page-9701 | See the Website
