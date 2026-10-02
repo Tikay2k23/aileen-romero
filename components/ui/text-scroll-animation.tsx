@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, type MotionValue } from "framer-motion
 import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { CircularCarousel, type CarouselItem } from "@/components/ui/circular-carousel";
-import HeroSectionwithCards from "@/components/ui/hero-with-cards";
+import HeroSectionwithCards, { type CardPhoto } from "@/components/ui/hero-with-cards";
 import AboutBento from "@/components/ui/about-bento";
 import PageGlow from "@/components/page-glow";
 
@@ -85,7 +85,8 @@ const CharacterV3 = ({
   );
 };
 
-const Skiper31 = () => {
+// photos: yours for the cards under "Download My CV", read from public/photo-cards/ by the page
+const Skiper31 = ({ photos }: { photos?: CardPhoto[] }) => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const targetRef2 = useRef<HTMLDivElement | null>(null);
   const targetRef3 = useRef<HTMLDivElement | null>(null);
@@ -250,7 +251,7 @@ const Skiper31 = () => {
       {/* Block 5 — fanned photo cards */}
       <div className="relative isolate">
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
-        <HeroSectionwithCards />
+        <HeroSectionwithCards photos={photos} />
       </div>
 
       {/* Block 6 — services carousel.

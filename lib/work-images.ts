@@ -1,21 +1,8 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
+import { imagesIn, titleFromFileName } from "@/lib/image-folder";
 import type { WorkArea, WorkProject } from "@/lib/work";
-
-// Formats browsers show everywhere (iPhone .heic photos need converting first)
-const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"]);
-
-// "01 Lead Routing.png" → "Lead Routing": the order number in front is dropped, dashes and underscores read as
-// spaces. A name that's only a number comes out empty.
-function titleFromFileName(file: string) {
-  return path
-    .parse(file)
-    .name.replace(/^\d+\s*[-_.)]?\s*/, "")
-    .replace(/[-_]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 // The number a file name starts with ("07 Agency Site.png" → 7): how links.txt points at an image
 function fileNumber(file: string) {
@@ -59,15 +46,7 @@ function readLinks(folder: string) {
 // Read when the page is built, and on every reload in development.
 export function workCards(area: WorkArea): WorkProject[] {
   const folder = path.join(process.cwd(), "public", "work", area.slug);
-  let files: string[] = [];
-  try {
-    files = fs
-      .readdirSync(folder)
-      .filter((file) => !file.startsWith(".") && IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
-  } catch {
-    // No folder: the placeholders only
-  }
+  const files = imagesIn(folder);
   const links = readLinks(folder);
 
   // Titles key the cards: an image named like another card (yours or a placeholder still showing) gets numbered

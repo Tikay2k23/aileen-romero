@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -56,7 +57,12 @@ const inView = { once: true, amount: 0.3 } as const;
 const CARD_SPACING = 120;
 const CARD_SPACING_SMALL = 50;
 
-const HeroSectionwithCards: React.FC = () => {
+// A photo of your own for one of the cards
+export type CardPhoto = { src: string; alt: string };
+
+// photos: yours from public/photo-cards/ (lib/photo-cards.ts), in card order, left to right; cards past the end
+// keep their placeholder
+const HeroSectionwithCards = ({ photos = [] }: { photos?: CardPhoto[] }) => {
   const cardSpacing = useIsSmallScreen() ? CARD_SPACING_SMALL : CARD_SPACING;
 
   return (
@@ -116,36 +122,42 @@ const HeroSectionwithCards: React.FC = () => {
         </motion.div>
 
         <div className="relative mt-10 flex h-[300px] w-full items-end justify-center sm:h-[380px]">
-          {CARDS.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.65,
-                delay: card.delay,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="absolute bottom-0 origin-bottom"
-              style={{
-                rotate: card.rotate,
-                zIndex: card.z,
-                translateX: `${(i - 2) * cardSpacing}px`,
-              }}
-            >
-              <Card className="w-36 h-56 sm:w-48 sm:h-72 md:w-56 md:h-80 p-0 overflow-hidden shadow-xl ring-2 ring-white/60 dark:ring-zinc-700/60 border-0 rounded-2xl">
-                <CardContent className="p-0 w-full h-full">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={card.src}
-                    alt={card.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          {CARDS.map((card, i) => {
+            const photo = photos[i] ?? card;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.65,
+                  delay: card.delay,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute bottom-0 origin-bottom"
+                style={{
+                  rotate: card.rotate,
+                  zIndex: card.z,
+                  translateX: `${(i - 2) * cardSpacing}px`,
+                }}
+              >
+                <Card className="w-36 h-56 sm:w-48 sm:h-72 md:w-56 md:h-80 p-0 overflow-hidden shadow-xl ring-2 ring-white/60 dark:ring-zinc-700/60 border-0 rounded-2xl">
+                  <CardContent className="relative p-0 w-full h-full">
+                    {/* Resized to the card's size; the stock placeholders come straight from their CDN */}
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 768px) 224px, (min-width: 640px) 192px, 144px"
+                      unoptimized={photo.src.startsWith("http")}
+                      className="object-cover"
+                    />
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>

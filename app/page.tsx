@@ -6,13 +6,14 @@ import TestimonialsSection from "@/components/testimonials-section";
 import ContactCtaSection from "@/components/contact-cta-section";
 import { StickyFooter } from "@/components/ui/sticky-footer";
 import SmoothScroll from "@/components/smooth-scroll";
+import { photoCards } from "@/lib/photo-cards";
 
 export default function Home() {
   return (
     <>
       <SmoothScroll />
       <HeroOne />
-      <Skiper31 />
+      <Skiper31 photos={photoCards()} />
       <CapabilityPillars />
       <FaqSection />
       <TestimonialsSection />
