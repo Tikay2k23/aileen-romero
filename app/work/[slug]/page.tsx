@@ -65,6 +65,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
           description={area.description}
           // Your images from public/work/<slug>/ where there are any (lib/work-images.ts)
           products={workCards(area)}
+          linkLabel={area.linkLabel}
         />
       </div>
     </main>

@@ -9,4 +9,7 @@ Drop .jpg, .png, .webp, .avif or .gif files into this folder:
 - Landscape images look best, about 5:4 (e.g. 1500 x 1200). Cards crop from the top-left corner.
 - Any size works: images are resized automatically.
 
+Clicking a card opens a preview with the whole image. To give a card a "Visit the app" button,
+put its link in links.txt in this folder (how is explained inside).
+
 Reload the page to see them. The live site picks them up on its next deploy.

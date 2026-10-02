@@ -1,0 +1,8 @@
+# Links for the button in the Growth page's card previews ("View the campaign").
+#
+# One line per card: the number its image's file name starts with, then the web address.
+# To change the words on that card's button, add " | " and your words after the address.
+#
+# Examples (remove the # at the start of a line to use it):
+# 01 https://example.com
+# 02 https://example.com/another | See the results

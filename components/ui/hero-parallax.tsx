@@ -8,12 +8,15 @@ import {
   MotionValue,
 } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import { Expand } from "lucide-react";
+import { WorkPreviewDialog } from "@/components/ui/work-preview-dialog";
 
 type Product = {
   title: string;
-  link: string;
   thumbnail: string;
+  // The button in the card's preview, when the card has somewhere to go
+  link?: string;
+  linkLabel?: string;
 };
 
 type HeaderProps = {
@@ -24,10 +27,21 @@ type HeaderProps = {
 
 export const HeroParallax = ({
   products,
+  linkLabel,
   ...header
 }: {
   products: Product[];
+  // The page's words for the preview's link button ("Visit the site")
+  linkLabel: string;
 } & HeaderProps) => {
+  // A card opens in a preview. It stays selected while the preview closes, so the content doesn't vanish mid-fade.
+  const [selected, setSelected] = React.useState<Product | null>(null);
+  const [previewOpen, setPreviewOpen] = React.useState(false);
+  const openPreview = (product: Product) => {
+    setSelected(product);
+    setPreviewOpen(true);
+  };
+
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
@@ -83,6 +97,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
+              onSelect={openPreview}
               key={product.title}
             />
           ))}
@@ -92,6 +107,7 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateXReverse}
+              onSelect={openPreview}
               key={product.title}
             />
           ))}
@@ -101,11 +117,19 @@ export const HeroParallax = ({
             <ProductCard
               product={product}
               translate={translateX}
+              onSelect={openPreview}
               key={product.title}
             />
           ))}
         </motion.div>
       </motion.div>
+      <WorkPreviewDialog
+        project={selected}
+        open={previewOpen}
+        onOpenChange={setPreviewOpen}
+        eyebrow={header.eyebrow}
+        linkLabel={linkLabel}
+      />
     </div>
   );
 };
@@ -131,9 +155,11 @@ export const Header = ({ eyebrow, title, description }: HeaderProps) => {
 export const ProductCard = ({
   product,
   translate,
+  onSelect,
 }: {
   product: Product;
   translate: MotionValue<number>;
+  onSelect: (product: Product) => void;
 }) => {
   return (
     <motion.div
@@ -146,9 +172,12 @@ export const ProductCard = ({
       key={product.title}
       className="group/product h-60 w-[20rem] md:h-96 md:w-[30rem] relative shrink-0"
     >
-      <Link
-        href={product.link}
-        className="relative block h-full w-full overflow-hidden rounded-2xl group-hover/product:shadow-2xl"
+      {/* Opens the card's preview */}
+      <button
+        type="button"
+        onClick={() => onSelect(product)}
+        aria-label={`Preview: ${product.title}`}
+        className="relative block h-full w-full cursor-pointer overflow-hidden rounded-2xl outline-none group-hover/product:shadow-2xl focus-visible:ring-4 focus-visible:ring-ring/50"
       >
         <Image
           src={product.thumbnail}
@@ -157,11 +186,18 @@ export const ProductCard = ({
           className="object-cover object-left-top absolute h-full w-full inset-0 rounded-2xl"
           alt={product.title}
         />
-      </Link>
-      <div className="absolute inset-0 h-full w-full rounded-2xl opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
-      <h2 className="absolute bottom-4 left-4 text-xl font-semibold opacity-0 group-hover/product:opacity-100 text-white pointer-events-none">
+      </button>
+      {/* The overlay, title and expand cue show on hover, and when the card is reached with the keyboard */}
+      <div className="absolute inset-0 h-full w-full rounded-2xl opacity-0 group-hover/product:opacity-80 group-has-[:focus-visible]/product:opacity-80 bg-black pointer-events-none"></div>
+      <h2 className="absolute bottom-4 left-4 text-xl font-semibold opacity-0 group-hover/product:opacity-100 group-has-[:focus-visible]/product:opacity-100 text-white pointer-events-none">
         {product.title}
       </h2>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-white text-black opacity-0 transition-opacity group-hover/product:opacity-100 group-has-[:focus-visible]/product:opacity-100"
+      >
+        <Expand className="size-4" />
+      </span>
     </motion.div>
   );
 };

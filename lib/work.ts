@@ -3,8 +3,11 @@
 
 export type WorkProject = {
   title: string;
-  link: string;
   thumbnail: string;
+  // Where the button in the card's preview goes, and its words when they differ from the page's linkLabel.
+  // Both come from links.txt next to your images (lib/work-images.ts); a card without a link has no such button.
+  link?: string;
+  linkLabel?: string;
 };
 
 export type WorkArea = {
@@ -22,6 +25,8 @@ export type WorkArea = {
   // (components/digital-hero.tsx), the floating image collage (components/creative-hero.tsx) or the terminal
   // that types out a deployment (components/engineering-hero.tsx)
   hero: "workflow" | "robot" | "cinematic" | "phone" | "collage" | "terminal";
+  // The words on the button in a card's preview, for cards that have a link ("Visit the site")
+  linkLabel: string;
   // Parallax cards on its page: three rows of five. Images in public/work/<slug>/ replace the placeholder photos
   // (lib/work-images.ts)
   projects: WorkProject[];
@@ -30,10 +35,9 @@ export type WorkArea = {
 const unsplash = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1200&q=80&auto=format&fit=crop`;
 
-// Every card leads to the "Let's work together" panel on the home page
+// A placeholder card: a stock photo until one of your images takes its place
 const project = (title: string, photoId: string): WorkProject => ({
   title,
-  link: "/#contact",
   thumbnail: unsplash(photoId),
 });
 
@@ -47,6 +51,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "I build CRM systems, workflows, funnels, and automated customer journeys that capture leads, book appointments, and keep every client moving forward.",
     hero: "workflow",
+    linkLabel: "See the workflow",
     projects: [
       project("Workflow Architecture", "1531403009284-440f080d1e12"),
       project("Lead Routing", "1544197150-b99a580bb7a8"),
@@ -74,6 +79,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "AI-powered workflows, APIs, webhooks, and connected systems that qualify leads, process data, and update your CRM without anyone lifting a finger.",
     hero: "robot",
+    linkLabel: "See it in action",
     projects: [
       project("AI Appointment Setters", "1485827404703-89b55fcc595e"),
       project("AI Lead Qualification", "1535378620166-273708d44e4c"),
@@ -101,6 +107,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "Meta Ads, Google Ads, tracking, and optimization that turn ad spend into measurable leads, booked calls, and real revenue.",
     hero: "cinematic",
+    linkLabel: "View the campaign",
     projects: [
       project("Meta Ads Campaigns", "1611926653458-09294b3142bf"),
       project("Google Ads Campaigns", "1556155092-490a1ba16284"),
@@ -128,6 +135,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "Conversion-focused websites, landing pages, and digital experiences wired directly into your CRM, automation, and analytics.",
     hero: "phone",
+    linkLabel: "Visit the site",
     projects: [
       project("Landing Pages", "1559028012-481c04fa702d"),
       project("Sales Funnels", "1432888498266-38ffec3eaf0a"),
@@ -155,6 +163,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "Video editing, graphic design, content creation, and marketing visuals that give every campaign a polished, on-brand look.",
     hero: "collage",
+    linkLabel: "View the project",
     projects: [
       project("Video Editing", "1574717024653-61fd2cf4d44d"),
       project("Short-Form Content", "1492619375914-88005aa9e8fb"),
@@ -182,6 +191,7 @@ export const WORK_AREAS: WorkArea[] = [
     description:
       "Full-stack applications, databases, and scalable digital solutions engineered around the way your business actually works.",
     hero: "terminal",
+    linkLabel: "Visit the app",
     projects: [
       project("Full-Stack Web Apps", "1555066931-4365d14bab8c"),
       project("Client Portals", "1573495627361-d9b87960b12d"),

@@ -2,7 +2,7 @@
 // where a finished inquiry goes
 
 // Which button the visitor used to open the form
-export type InquirySource = "lets-collaborate" | "get-started" | "contact-me" | "build-your-system";
+export type InquirySource = "lets-collaborate" | "get-started" | "contact-me" | "build-your-system" | "work-preview";
 
 export const PROJECT_TYPES = ["Automation", "AI", "Paid Ads", "Development", "Creative", "Systems"] as const;
 export type ProjectType = (typeof PROJECT_TYPES)[number];
