@@ -7,13 +7,14 @@ import ContactCtaSection from "@/components/contact-cta-section";
 import { StickyFooter } from "@/components/ui/sticky-footer";
 import SmoothScroll from "@/components/smooth-scroll";
 import { photoCards } from "@/lib/photo-cards";
+import { toolStack } from "@/lib/tool-stack";
 
 export default function Home() {
   return (
     <>
       <SmoothScroll />
       <HeroOne />
-      <Skiper31 photos={photoCards()} />
+      <Skiper31 photos={photoCards()} toolStack={toolStack()} />
       <CapabilityPillars />
       <FaqSection />
       <TestimonialsSection />

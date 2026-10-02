@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import IntroAnimation from "@/components/ui/scroll-morph-hero";
 
-export default function Preloader({ children }: { children: React.ReactNode }) {
+// introImages: yours for the intro's cards, from public/intro/ (lib/intro-images.ts); the stock ones without
+export default function Preloader({ children, introImages }: { children: React.ReactNode; introImages?: string[] }) {
   const pathname = usePathname();
   // The intro belongs to the home page: landing directly on a work page skips it.
   // Only the first page load decides; the layout (and this state) persists across client navigation.
@@ -36,7 +37,7 @@ export default function Preloader({ children }: { children: React.ReactNode }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
           >
-            <IntroAnimation onComplete={() => setVisible(false)} />
+            <IntroAnimation images={introImages} onComplete={() => setVisible(false)} />
           </motion.div>
         )}
       </AnimatePresence>

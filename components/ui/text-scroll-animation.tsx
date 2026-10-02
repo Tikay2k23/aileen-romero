@@ -7,12 +7,15 @@ import { CircularCarousel, type CarouselItem } from "@/components/ui/circular-ca
 import HeroSectionwithCards, { type CardPhoto } from "@/components/ui/hero-with-cards";
 import AboutBento from "@/components/ui/about-bento";
 import PageGlow from "@/components/page-glow";
+import type { StackIcon } from "@/lib/tool-stack";
 
 type CharacterProps = {
   char: string;
   index: number;
   centerIndex: number;
   scrollYProgress: MotionValue<number>;
+  // What the image shows, for screen readers (the tool icons)
+  label?: string;
 };
 
 
@@ -41,6 +44,7 @@ const CharacterV1 = ({
 
 const CharacterV2 = ({
   char,
+  label,
   index,
   centerIndex,
   scrollYProgress,
@@ -54,7 +58,7 @@ const CharacterV2 = ({
   return (
     <motion.img
       src={char}
-      alt=""
+      alt={label ?? ""}
       className="h-16 w-16 shrink-0 object-contain will-change-transform"
       style={{ x, scale, y, transformOrigin: "center" }}
     />
@@ -64,6 +68,7 @@ const CharacterV2 = ({
 
 const CharacterV3 = ({
   char,
+  label,
   index,
   centerIndex,
   scrollYProgress,
@@ -78,15 +83,16 @@ const CharacterV3 = ({
   return (
     <motion.img
       src={char}
-      alt=""
+      alt={label ?? ""}
       className="h-16 w-16 shrink-0 object-contain will-change-transform"
       style={{ x, rotate, y, scale, transformOrigin: "center" }}
     />
   );
 };
 
-// photos: yours for the cards under "Download My CV", read from public/photo-cards/ by the page
-const Skiper31 = ({ photos }: { photos?: CardPhoto[] }) => {
+// photos: yours for the cards under "Download My CV", read from public/photo-cards/ by the page. toolStack: the icons
+// under "my fav tool stack" (lib/tool-stack.ts).
+const Skiper31 = ({ photos, toolStack }: { photos?: CardPhoto[]; toolStack?: StackIcon[] }) => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const targetRef2 = useRef<HTMLDivElement | null>(null);
   const targetRef3 = useRef<HTMLDivElement | null>(null);
@@ -104,16 +110,9 @@ const Skiper31 = ({ photos }: { photos?: CardPhoto[] }) => {
   const wordStarts = words.map((_, w) => (w === 0 ? 0 : words.slice(0, w).join(" ").length + 1));
 
 
-  const macIcon = [
-    "https://cdn.21st.dev/assets/mirror/1d/1d364b72c9eaf1fe37d17ca88cd8fb541308dc0f3b09e2ab3b824f380b3493d5.svg",
-    "https://cdn.21st.dev/assets/mirror/2f/2f86fca501dfed321a62f28743f29d9dd738dac91668eac5260ab746d1ef8840.svg",
-    "https://cdn.21st.dev/assets/mirror/c6/c6c80c9ba890e199e94d35340fb4cf2d5790f339d9846800d68283e3e58e6031.svg",
-    "https://cdn.21st.dev/assets/mirror/3b/3bf8cceead820aec50d4ee825a3fd02c5a1cd6665cc9cf4cbf3d9c8861a204bb.svg",
-    "https://cdn.21st.dev/assets/mirror/66/6698757ee85997e8167b2eacaff8395d6987954185488f2e90b88ef387fec6c7.svg",
-    "https://cdn.21st.dev/assets/mirror/b1/b17d2a2b592a06252efef522d5205f0c7a958f748d40df1011ed081417e42f85.svg",
-
-  ];
-  const iconCenterIndex = Math.floor(macIcon.length / 2);
+  // The tool marks, in order (lib/tool-stack.ts)
+  const icons = toolStack ?? [];
+  const iconCenterIndex = Math.floor(icons.length / 2);
 
   const services: CarouselItem[] = [
     {
@@ -200,15 +199,16 @@ const Skiper31 = ({ photos }: { photos?: CardPhoto[] }) => {
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
           <Bracket className="h-12 text-black" />
-          <span className="font-geist font-medium">my fav tech stack</span>
+          <span className="font-geist font-medium">my fav tool stack</span>
           <Bracket className="h-12 scale-x-[-1] text-black" />
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-8">
-          {macIcon.map((char, index) => (
+          {icons.map((icon, index) => (
             <CharacterV2
-              key={index}
-              char={char}
+              key={icon.name}
+              char={icon.src}
+              label={icon.name}
               index={index}
               centerIndex={iconCenterIndex}
               scrollYProgress={scrollYProgress2}
@@ -225,15 +225,16 @@ const Skiper31 = ({ photos }: { photos?: CardPhoto[] }) => {
         <PageGlow className="absolute top-1/2 -translate-y-1/2" />
         <p className="font-geist flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-black">
           <Bracket className="h-12 text-black" />
-          <span className="font-geist font-medium">my fav tech stack</span>
+          <span className="font-geist font-medium">my fav tool stack</span>
           <Bracket className="h-12 scale-x-[-1] text-black" />
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>
-          {macIcon.map((char, index) => (
+          {icons.map((icon, index) => (
             <CharacterV3
-              key={index}
-              char={char}
+              key={icon.name}
+              char={icon.src}
+              label={icon.name}
               index={index}
               centerIndex={iconCenterIndex}
               scrollYProgress={scrollYProgress3}

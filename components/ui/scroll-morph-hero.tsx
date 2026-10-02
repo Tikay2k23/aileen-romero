@@ -9,7 +9,6 @@ export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip";
 
 interface FlipCardProps {
     src: string;
-    index: number;
     target: { x: number; y: number; rotation: number; scale: number; opacity: number };
 }
 
@@ -22,7 +21,7 @@ export interface IntroAnimationProps {
     heading?: string;
     /** Supporting text under the heading */
     description?: string;
-    /** Card images (first 20 are used) */
+    /** Card images: the first 20 are used, and fewer repeat to fill all 20 cards */
     images?: string[];
     /** Called once the arc has formed and been held for `holdMs` */
     onComplete?: () => void;
@@ -34,7 +33,7 @@ export interface IntroAnimationProps {
 const IMG_WIDTH = 60;
 const IMG_HEIGHT = 85;
 
-function FlipCard({ src, index, target }: FlipCardProps) {
+function FlipCard({ src, target }: FlipCardProps) {
     return (
         <motion.div
             // Smoothly animate to the coordinates defined by the parent
@@ -73,7 +72,7 @@ function FlipCard({ src, index, target }: FlipCardProps) {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={src}
-                        alt={`hero-${index}`}
+                        alt=""
                         className="h-full w-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
@@ -247,17 +246,23 @@ export default function IntroAnimation({
         return () => { clearTimeout(timer1); clearTimeout(timer2); };
     }, []);
 
+    // --- The cards: always TOTAL_IMAGES, the images repeating when there are fewer ---
+    const cards = useMemo(() => {
+        const list = images.length ? images : DEFAULT_IMAGES;
+        return Array.from({ length: TOTAL_IMAGES }, (_, i) => list[i % list.length]);
+    }, [images]);
+
     // --- Random Scatter Positions ---
     // Seeded per card so server and client render the same positions
     const scatterPositions = useMemo(() => {
-        return images.map((_, i) => ({
+        return cards.map((_, i) => ({
             x: (seededRandom(i * 3 + 1) - 0.5) * 1500,
             y: (seededRandom(i * 3 + 2) - 0.5) * 1000,
             rotation: (seededRandom(i * 3 + 3) - 0.5) * 180,
             scale: 0.6,
             opacity: 0,
         }));
-    }, [images]);
+    }, [cards]);
 
     // --- Render Loop (Manual Calculation for Morph) ---
     const [morphValue, setMorphValue] = useState(0);
@@ -331,7 +336,7 @@ export default function IntroAnimation({
 
                 {/* Main Container */}
                 <div className="relative flex items-center justify-center w-full h-full">
-                    {images.slice(0, TOTAL_IMAGES).map((src, i) => {
+                    {cards.map((src, i) => {
                         let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
                         // 1. Intro Phases (Scatter -> Line)
@@ -399,7 +404,6 @@ export default function IntroAnimation({
                             <FlipCard
                                 key={i}
                                 src={src}
-                                index={i}
                                 target={target}
                             />
                         );

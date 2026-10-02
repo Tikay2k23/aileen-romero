@@ -7,8 +7,9 @@ import { cn } from '@/lib/utils';
 import { MotionConfig, motion, useInView } from 'motion/react';
 import { buttonVariants } from '@/components/ui/button';
 import Logo from '@/components/ui/hero-01-utils/logo';
-import { BrandIcon, type Brand } from '@/components/ui/brand-icons';
+import { BrandIcon } from '@/components/ui/brand-icons';
 import { goToSection } from '@/lib/section-nav';
+import { SOCIAL_LINKS } from '@/lib/social-links';
 import { WORK_AREAS, workHref } from '@/lib/work';
 
 interface FooterLink {
@@ -61,7 +62,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 										workflows.
 									</p>
 									<div className="flex gap-2">
-										{socialLinks.map((link) => {
+										{SOCIAL_LINKS.map((link) => {
 											const external = link.href.startsWith('http');
 											return (
 												<a
@@ -98,9 +99,12 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 								))}
 							</div>
 						</MotionConfig>
-						<div className="text-muted-foreground relative flex flex-col items-center justify-between gap-2 border-t pt-2 text-sm md:flex-row">
+						{/* Padded on the right so nothing ends under GoHighLevel's chat button in the corner; on phones the two
+						    lines stack on the left for the same reason */}
+						<div className="text-muted-foreground relative flex flex-col items-start justify-between gap-2 border-t pt-2 pe-16 text-sm md:flex-row md:items-center md:pe-14">
 							{/* The year is read where the page is built, then again in the browser */}
 							<p suppressHydrationWarning>© {new Date().getFullYear()} Aileen Romero. All rights reserved.</p>
+							<p>Created by: Mark Angelo Yakit</p>
 						</div>
 					</div>
 				</div>
@@ -136,16 +140,6 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
 		</Link>
 	);
 }
-
-// Placeholder profile links: swap '#' for real URLs (external links open in a new tab)
-const socialLinks: { title: string; brand: Brand; href: string }[] = [
-	{ title: 'Facebook', brand: 'facebook', href: '#' },
-	{ title: 'GitHub', brand: 'github', href: '#' },
-	{ title: 'Instagram', brand: 'instagram', href: '#' },
-	{ title: 'LinkedIn', brand: 'linkedin', href: '#' },
-	{ title: 'X', brand: 'x', href: '#' },
-	{ title: 'YouTube', brand: 'youtube', href: '#' },
-];
 
 const footerLinkGroups: FooterLinkGroup[] = [
 	{

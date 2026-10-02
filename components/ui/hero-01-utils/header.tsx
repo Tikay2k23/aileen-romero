@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { Icon } from "@iconify/react";
+import { BrandIcon } from "@/components/ui/brand-icons";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 import { Menu, X } from "lucide-react";
 import Logo from "@/components/ui/hero-01-utils/logo";
 import { Button } from "@/components/ui/button";
@@ -281,19 +282,18 @@ const Header = ({ navigationData, className }: HeaderProps) => {
                     </div>
 
                     <div className="mt-auto flex flex-col gap-4">
+                      {/* The same profiles as the footer (lib/social-links.ts) */}
                       <div className="flex gap-3">
-                        {[
-                          "lucide:dribbble",
-                          "lucide:instagram",
-                          "lucide:twitter",
-                          "lucide:linkedin",
-                        ].map((icon) => (
+                        {SOCIAL_LINKS.map((link) => (
                           <a
-                            key={icon}
-                            href="#"
+                            key={link.title}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={link.title}
                             className="flex items-center justify-center rounded-full outline outline-border hover:bg-muted transition p-3 shadow-xs"
                           >
-                            <Icon icon={icon} width={16} height={16} />
+                            <BrandIcon brand={link.brand} className="size-4" />
                           </a>
                         ))}
                       </div>

@@ -5,6 +5,7 @@ import Preloader from "@/components/preloader";
 import ProjectInquiry from "@/components/project-inquiry";
 import GhlChatWidget from "@/components/ghl-chat-widget";
 import { ignoreKnownGhlWidgetBug } from "@/lib/ghl-error-guard";
+import { introImages } from "@/lib/intro-images";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Preloader>{children}</Preloader>
+        <Preloader introImages={introImages()}>{children}</Preloader>
         <ProjectInquiry />
         <GhlChatWidget />
         {/* Quiets a known bug in the GoHighLevel chat widget: see lib/ghl-error-guard.ts */}

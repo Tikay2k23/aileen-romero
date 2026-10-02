@@ -2,7 +2,14 @@
 // where a finished inquiry goes
 
 // Which button the visitor used to open the form
-export type InquirySource = "lets-collaborate" | "get-started" | "contact-me" | "build-your-system" | "work-preview";
+export const INQUIRY_SOURCES = [
+  "lets-collaborate",
+  "get-started",
+  "contact-me",
+  "build-your-system",
+  "work-preview",
+] as const;
+export type InquirySource = (typeof INQUIRY_SOURCES)[number];
 
 export const PROJECT_TYPES = ["Automation", "AI", "Paid Ads", "Development", "Creative", "Systems"] as const;
 export type ProjectType = (typeof PROJECT_TYPES)[number];
@@ -60,22 +67,14 @@ export const projectInquiryModal = {
   getServerSnapshot: () => CLOSED,
 };
 
-// Sends a finished inquiry. NOT CONNECTED YET: this resolves without sending or storing the answers anywhere.
-//
-// To connect GoHighLevel, replace the body with a request to a route of this site, for example
-//
-//   const response = await fetch("/api/project-inquiry", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(inquiry),
-//   });
-//   if (!response.ok) throw new Error("The inquiry could not be sent");
-//
-// and have that route (app/api/project-inquiry/route.ts) forward the inquiry to a GoHighLevel inbound webhook,
-// reading the webhook URL from a server-side environment variable so it never reaches the browser.
-// Throwing here makes the form show an error and keep the visitor's answers.
+// Sends a finished inquiry to this site's route (app/api/project-inquiry/route.ts), which passes it on to
+// GoHighLevel with a key that stays on the server. Throwing makes the form show an error and keep the visitor's
+// answers.
 export async function submitProjectInquiry(inquiry: ProjectInquiry): Promise<void> {
-  if (process.env.NODE_ENV !== "production") {
-    console.info("Project inquiry (not sent anywhere yet):", inquiry);
-  }
+  const response = await fetch("/api/project-inquiry", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(inquiry),
+  });
+  if (!response.ok) throw new Error(`The inquiry could not be sent (${response.status})`);
 }

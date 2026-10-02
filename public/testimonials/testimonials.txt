@@ -1,0 +1,31 @@
+# "What Clients Say" on the home page: one block per client, in the order they should appear.
+#
+# Start each block with its number on a line of its own, then three lines:
+#   Name:  the client's name
+#   Role:  their role and company
+#   Quote: what they said (it can carry on over the next lines)
+#
+# The client's photo goes in this folder, its name starting with the same number (e.g. "01 Jane.jpg").
+# A client without a photo shows their initials instead.
+# Once one client is filled in, your testimonials replace all the placeholders.
+#
+# Example (remove the # at the start of each line to use it):
+# 01
+# Name: Jane Cruz
+# Role: Marketing Director, Acme Co
+# Quote: Aileen rebuilt our follow-up in GoHighLevel, and every new lead now gets a reply right away.
+
+01
+Name: Mosope Adebowale
+Role: Product Designer
+Quote: Aileen brings structure and clarity to complex GoHighLevel systems, helping our team work faster and serve clients more effectively.
+
+02
+Name: Fritz Colinet
+Role: Retna Media, CEO
+Quote: Her ability to build reliable automations and improve CRM processes has made a noticeable difference in our day to day operations.
+
+03
+Name: Joe Eves
+Role: CEO
+Quote: Aileen combines technical expertise with strong problem solving skills, creating practical systems that support smoother workflows and better results.
