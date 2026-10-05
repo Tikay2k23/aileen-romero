@@ -24,7 +24,7 @@ function HeroSection({ avatarList }: HeroSectionProps) {
       <div className="w-full h-full relative">
         <div className="relative w-full pt-0 md:pt-[min(5rem,8svh)] pb-6 md:pb-10">
           <PageGlow className="absolute top-24" />
-          <div className="container mx-auto relative z-10">
+          <div className="container mx-auto relative z-10 px-4">
             {/* max-w-7xl (was 5xl) so "Building smarter systems" fits on one line at the lg:text-8xl size */}
             <div className="flex flex-col max-w-7xl mx-auto gap-8">
               <div className="relative flex flex-col text-center items-center sm:gap-6 gap-4">
@@ -32,7 +32,7 @@ function HeroSection({ avatarList }: HeroSectionProps) {
                   initial={{ opacity: 0, y: 32 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, ease: "easeInOut" }}
-                  className="lg:text-8xl md:text-7xl text-5xl font-medium leading-14 md:leading-20 lg:leading-24"
+                  className="lg:text-8xl md:text-7xl text-[clamp(2.25rem,11vw,3rem)] font-medium leading-[1.15] md:leading-20 lg:leading-24"
                 >
                   Building smarter systems that drive{" "}
                   <span

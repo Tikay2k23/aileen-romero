@@ -99,12 +99,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 								))}
 							</div>
 						</MotionConfig>
-						{/* Padded on the right so nothing ends under GoHighLevel's chat button in the corner; on phones the two
-						    lines stack on the left for the same reason */}
-						<div className="text-muted-foreground relative flex flex-col items-start justify-between gap-2 border-t pt-2 pe-16 text-sm md:flex-row md:items-center md:pe-14">
+						{/* Left-aligned and padded on the right, so the line never ends under GoHighLevel's chat button in the corner */}
+						<div className="text-muted-foreground relative border-t pt-2 pe-16 text-sm md:pe-14">
 							{/* The year is read where the page is built, then again in the browser */}
 							<p suppressHydrationWarning>© {new Date().getFullYear()} Aileen Romero. All rights reserved.</p>
-							<p>Created by: Mark Angelo Yakit</p>
 						</div>
 					</div>
 				</div>
