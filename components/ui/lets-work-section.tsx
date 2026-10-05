@@ -4,21 +4,22 @@ import type React from "react"
 
 import { useState } from "react"
 import { ArrowUpRight, Calendar } from "lucide-react"
+import { BookingModal } from "@/components/ui/booking-modal"
 import { cn } from "@/lib/utils"
 
+// "Book a call" opens the GoHighLevel booking calendar in a pop-up (components/ui/booking-modal.tsx)
 interface LetsWorkTogetherProps {
-  // Where "Book a call" goes (e.g. a Cal.com or Calendly link); falls back to emailing when unset
-  bookingUrl?: string
   // Shown under the pitch; the line is hidden when no email is set
   email?: string
   className?: string
 }
 
-export function LetsWorkTogether({ bookingUrl, email, className }: LetsWorkTogetherProps) {
+export function LetsWorkTogether({ email, className }: LetsWorkTogetherProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [isButtonHovered, setIsButtonHovered] = useState(false)
+  const [isBookingOpen, setIsBookingOpen] = useState(false)
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -27,14 +28,6 @@ export function LetsWorkTogether({ bookingUrl, email, className }: LetsWorkToget
     setTimeout(() => {
       setShowSuccess(true)
     }, 500)
-  }
-
-  const handleBookCall = () => {
-    if (bookingUrl) {
-      window.open(bookingUrl, "_blank", "noopener,noreferrer")
-    } else if (email) {
-      window.location.href = `mailto:${email}`
-    }
   }
 
   return (
@@ -75,7 +68,7 @@ export function LetsWorkTogether({ bookingUrl, email, className }: LetsWorkToget
 
           {/* Book a call button (kept out of the tab order until it is revealed) */}
           <button
-            onClick={handleBookCall}
+            onClick={() => setIsBookingOpen(true)}
             onMouseEnter={() => setIsButtonHovered(true)}
             onMouseLeave={() => setIsButtonHovered(false)}
             tabIndex={showSuccess ? 0 : -1}
@@ -281,6 +274,8 @@ export function LetsWorkTogether({ bookingUrl, email, className }: LetsWorkToget
           )}
         </div>
       </div>
+
+      <BookingModal open={isBookingOpen} onOpenChange={setIsBookingOpen} />
     </section>
   )
 }

@@ -2,11 +2,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// The pill every work page uses to return home. Callers set the positioning.
+// The pill every work page uses to return home: back to the Work section (components/capability-pillars.tsx), where
+// the six work areas are listed, rather than the top of the page. Callers set the positioning.
 export default function BackToHome({ className }: { className?: string }) {
   return (
     <Link
-      href="/"
+      href="/#work"
       className={cn(
         "inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/60 px-4 py-2 text-sm font-medium shadow-2xl shadow-primary/5 backdrop-blur-lg transition hover:bg-background",
         className
