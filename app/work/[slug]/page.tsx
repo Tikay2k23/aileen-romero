@@ -69,6 +69,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
             // Your images from public/work/<slug>/ where there are any (lib/work-images.ts)
             products={workCards(area)}
             linkLabel={area.linkLabel}
+            category={area.name}
           />
         </div>
         {/* The cards fade out at the bottom instead of being cut off where the next section begins */}

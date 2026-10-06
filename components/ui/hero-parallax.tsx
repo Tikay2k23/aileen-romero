@@ -8,8 +8,10 @@ import {
   MotionValue,
 } from "framer-motion";
 import Image from "next/image";
-import { Expand } from "lucide-react";
+import { ArrowUpRight, Expand } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { WorkPreviewDialog } from "@/components/ui/work-preview-dialog";
+import { SeeAllWorkDialog } from "@/components/ui/see-all-work-dialog";
 
 type Product = {
   title: string;
@@ -23,16 +25,21 @@ type HeaderProps = {
   eyebrow?: string;
   title: string;
   description: string;
+  // Opens every card at once ("See all projects")
+  onSeeAll?: () => void;
 };
 
 export const HeroParallax = ({
   products,
   linkLabel,
+  category,
   ...header
 }: {
   products: Product[];
   // The page's words for the preview's link button ("Visit the site")
   linkLabel: string;
+  // The area of work ("Digital"), for "See all"
+  category: string;
 } & HeaderProps) => {
   // A card opens in a preview. It stays selected while the preview closes, so the content doesn't vanish mid-fade.
   const [selected, setSelected] = React.useState<Product | null>(null);
@@ -41,6 +48,8 @@ export const HeroParallax = ({
     setSelected(product);
     setPreviewOpen(true);
   };
+  // "See all projects": every card at once, in the 21st.dev carousel-08 design (components/ui/see-all-work-dialog.tsx)
+  const [seeAllOpen, setSeeAllOpen] = React.useState(false);
 
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
@@ -78,11 +87,14 @@ export const HeroParallax = ({
     springConfig
   );
   return (
+    // Without transform-style: preserve-3d, which would sort the heading among the tilted cards in depth: a card's
+    // plane passes through the "See all projects" button, and a click on it could land on the card behind. The cards
+    // still tilt in perspective; the heading stays in front of them (z-10).
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px]"
     >
-      <Header {...header} />
+      <Header {...header} onSeeAll={() => setSeeAllOpen(true)} />
       <motion.div
         style={{
           rotateX,
@@ -130,13 +142,21 @@ export const HeroParallax = ({
         eyebrow={header.eyebrow}
         linkLabel={linkLabel}
       />
+      <SeeAllWorkDialog
+        open={seeAllOpen}
+        onOpenChange={setSeeAllOpen}
+        cards={products}
+        category={category}
+        eyebrow={header.eyebrow}
+        linkLabel={linkLabel}
+      />
     </div>
   );
 };
 
-export const Header = ({ eyebrow, title, description }: HeaderProps) => {
+export const Header = ({ eyebrow, title, description, onSeeAll }: HeaderProps) => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+    <div className="max-w-7xl relative z-10 mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
       {eyebrow && (
         <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
           {eyebrow}
@@ -148,6 +168,18 @@ export const Header = ({ eyebrow, title, description }: HeaderProps) => {
       <p className="max-w-2xl text-base md:text-xl mt-8 text-muted-foreground dark:text-neutral-200">
         {description}
       </p>
+      {onSeeAll && (
+        // The site's call-to-action pill, like the hero's "Get Started"
+        <Button
+          onClick={onSeeAll}
+          className="relative mt-10 text-sm font-medium rounded-full h-12 p-1 ps-6 pe-14 group transition-all duration-500 hover:ps-14 hover:pe-6 w-fit overflow-hidden cursor-pointer"
+        >
+          <span className="relative z-10 transition-all duration-500">See all projects</span>
+          <span className="absolute right-1 w-10 h-10 bg-background text-foreground rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground">
+            <ArrowUpRight size={16} />
+          </span>
+        </Button>
+      )}
     </div>
   );
 };
