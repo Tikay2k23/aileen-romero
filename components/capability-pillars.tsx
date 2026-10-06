@@ -2,9 +2,11 @@
 
 import type { CSSProperties } from "react";
 import { useLenis } from "lenis/react";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
-import PageGlow from "@/components/page-glow";
+import PageGlow, { EdgeFadedGlow } from "@/components/page-glow";
 import { InteractiveHoverLinks } from "@/components/ui/interactive-hover-links";
 import { LetsWorkTogether } from "@/components/ui/lets-work-section";
 import { instrumentSerif } from "@/lib/fonts";
@@ -243,8 +245,33 @@ const WORK_LINKS = WORK_AREAS.map((area) => ({
 // Keep GSAP's pins in step with Lenis smooth scrolling: update on the same frame as each scroll
 const syncScrollTrigger = () => ScrollTrigger.update();
 
+// "Let's work together" fades in along the edges that cross the work as it swings in over it: its top while it
+// slides up, and its left side while it's tilted. The work's glow then blends into it instead of being cut off in a
+// line. Both fades close up as the panel settles, so nothing of the work shows through once it's in place (where the
+// nav's Contact link lands). The fades' widths are --fade-top and --fade-left on the panel (its mask, below).
+function useContactEdgeFade() {
+  useGSAP(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const section = document.getElementById("contact");
+    const panel = section?.querySelector<HTMLElement>("[data-flow-inner]");
+    if (!section || !panel) return;
+    gsap.fromTo(
+      panel,
+      { "--fade-top": "10rem" },
+      { "--fade-top": "0rem", ease: "none", scrollTrigger: { trigger: section, start: "top 40%", end: "top top", scrub: true } },
+    );
+    // The tilt ends when the panel's top reaches a quarter of the way down the screen (components/ui/story-scroll.tsx)
+    gsap.fromTo(
+      panel,
+      { "--fade-left": "2.5rem" },
+      { "--fade-left": "0rem", ease: "none", scrollTrigger: { trigger: section, start: "top 60%", end: "top 25%", scrub: true } },
+    );
+  });
+}
+
 export default function CapabilityPillars() {
   useLenis(syncScrollTrigger);
+  useContactEdgeFade();
 
   return (
     <FlowArt aria-label="Capability pillars">
@@ -340,9 +367,19 @@ export default function CapabilityPillars() {
         </div>
       </FlowSection>
 
-      {/* Closing panel: swings in over the work */}
-      <FlowSection id="contact" aria-label="Let's work together" style={TONES.light.style}>
-        <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+      {/* Closing panel: swings in over the work, its edges fading in as it comes (useContactEdgeFade). Its own glow
+          fades out toward its top and bottom, so it meets the FAQ below in plain background too. */}
+      <FlowSection
+        id="contact"
+        aria-label="Let's work together"
+        style={{
+          ...TONES.light.style,
+          maskImage:
+            "linear-gradient(to bottom, transparent, #000 var(--fade-top, 0rem)), linear-gradient(to right, transparent, #000 var(--fade-left, 0rem))",
+          maskComposite: "intersect",
+        }}
+      >
+        <EdgeFadedGlow />
         <LetsWorkTogether className="min-h-0 flex-1" />
       </FlowSection>
     </FlowArt>

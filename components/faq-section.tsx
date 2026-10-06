@@ -1,4 +1,4 @@
-import PageGlow from "@/components/page-glow";
+import { EdgeFadedGlow } from "@/components/page-glow";
 import { FAQChatAccordion, type FAQItem } from "@/components/ruixen/faq-chat-accordion";
 
 // Draft answers built from the site's own services copy; edit to taste
@@ -33,7 +33,8 @@ const FAQS: FAQItem[] = [
 export default function FaqSection() {
   return (
     <div className="relative isolate">
-      <PageGlow className="absolute top-1/2 -translate-y-1/2" />
+      {/* Faded toward its edges: "Let's work together" above is drawn over anything that reaches past the top */}
+      <EdgeFadedGlow />
       <FAQChatAccordion title="Have questions?" items={FAQS} />
     </div>
   );
