@@ -91,7 +91,7 @@ const HeroSectionwithCards = ({ photos = [] }: { photos?: CardPhoto[] }) => {
           transition={{ duration: 0.5, delay: 0.38, ease: "easeOut" }}
           className="mt-5 text-base text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed"
         >
-          Hi, I&apos;m Aileen Romero. I have 4+ years of hands-on experience with GoHighLevel, building
+          Hi, I&apos;m Aileen Romero. I have 5+ years of hands-on experience with GoHighLevel, building
           automation, CRM systems, AI workflows, funnels, websites, and digital solutions that help businesses
           streamline their operations and grow.
         </motion.p>
